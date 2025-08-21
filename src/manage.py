@@ -1,5 +1,5 @@
-from tornado import ioloop
-from tornado import httpserver
+import os
+from tornado import ioloop, httpserver
 from tornado.web import Application
 
 from controllers.controller_task import All, Created, Updated, Deleted
@@ -21,11 +21,12 @@ class RunApp(Application):
             static_path =  'static'
         )
 
-        Application.__init__(self, handlers, **settings)
+        super().__init__(handlers, **settings)
 
 if __name__ == '__main__':
+    port = int(os.environ.get("PORT", 5000)) 
     http_server = httpserver.HTTPServer(RunApp())
-    http_server.listen(5000)
+    http_server.listen(port)
 
     print("[Server] Server running successfully")
     print("[Server] Port: http://localhost:5000/")

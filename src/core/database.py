@@ -1,8 +1,14 @@
 import sqlite3
 
+import os
+import sqlite3
+
+DB_PATH = os.environ.get("DB_PATH", "./data/sqlite3.db")
+os.makedirs(os.path.dirname(DB_PATH), exist_ok=True)
+
+
 def _execute(query, params=None):
-    db_path = './sqlite3'
-    connection = sqlite3.connect(db_path)
+    connection = sqlite3.connect(DB_PATH)
     cursor = connection.cursor()
     result = None
 
