@@ -1,0 +1,11 @@
+# Arquivos do Python
+__pycache__/
+
+# Ambientes virtuais
+env/
+
+# Arquivos de configuração do editor
+.vscode/
+
+# Arquivos de banco de dados temporários
+*.sqlite3
