@@ -8,4 +8,4 @@ env/
 .vscode/
 
 # Arquivos de banco de dados temporários
-*.sqlite3
+sqlite3

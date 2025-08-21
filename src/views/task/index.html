@@ -1,0 +1,66 @@
+{% extends '../base.html' %}
+
+{% block head %}<title>Taskly</title>{% end %}
+
+{% block body %}
+
+    <div class="py-5 my-5">
+
+        <h2 class="display-5 fw-bold my-5">Tarefas</h2>
+
+            {% if tasks %}
+            <table class="table table-hover text-center align-middle">
+
+                <tr>
+                    <td>ID</td>
+                    <td>Descrição</td>
+                    <td>Prazo</td>
+                    <td>Status</td>
+                    <td>Atualizar</td>
+                </tr>
+
+                <!-- DADOS do Banco -->
+                {% for task in tasks %}
+                <tr>
+                    <td>{{ task[0] }}</td>
+                    <td>{{ task[1] }}</td>
+
+                    <!-- Se o prazo estiver Vencido conforme a data atual -->
+                    <td>
+                        {% if task[2] < now %}
+                            <span class="text-danger">Vencido</span>
+                        {% else %}
+                            {{ task[2] }}
+                        {% end %}
+                    </td>
+
+                    <!-- Alteração de Status para Comcluido ou Andamento-->
+                    <td>
+                        {% if task[3] == "Completed" %}
+                            <a class="btn btn-success btn-sm" href="/task/update/{{ task[0] }}/status/Progress"><i class="bi bi-check-circle me-3"></i> Concluido</a>
+                        {% elif task[3] == "Progress" %}
+                            <a class="btn btn-primary btn-sm" href="/task/update/{{ task[0] }}/status/Completed"><i class="bi bi-arrow-repeat me-2"></i> Andamento</a>
+                        {% end %}
+                    </td>
+
+                    <!-- Botão para tela de Edição-->
+                    <td>
+                        <a class="btn btn-secondary btn-sm" href="/task/update/{{ task[0] }}"><i class="bi bi-pencil me-2"></i> Editar</a>
+                    </td>
+
+                </tr>
+                {% end %}
+
+            </table>
+        
+        <!-- Caso não tiver tarefa, irá informar -->
+        {% else %}
+            <div class="text-center py-5">
+                <p class="lead">Ainda não existem tarefas cadastradas.</p>
+                <a href="/task/create" class="btn btn-primary">Adicionar Tarefa</a>
+            </div>
+        {% end %}
+
+    </div>
+
+{% end %}

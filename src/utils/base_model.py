@@ -1,16 +1,17 @@
 from core.database import _execute
 from datetime import datetime
 from typing import Optional
+from core.setup import Setup
 
-class BaseModel:
+class BaseModel(Setup):
 
     table_name = None
 
     def __init__(self):
-        self.id = id
+        self.id: Optional[int] = None
         self.created_at = datetime.now()
         self.uptaded_at = datetime.now()
-        self.deleted_at = Optional[datetime] = None
+        self.deleted_at: Optional[datetime] = None
     
     base_fields = {
         "id": "INTEGER PRIMARY KEY AUTOINCREMENT",
@@ -29,14 +30,14 @@ class BaseModel:
         query = f"CREATE TABLE IF NOT EXISTS {cls.table_name} ({columns});"
         return query
 
-    def uptaded(self):
+    def updated(self):
         if not self.table_name:
             raise ValueError("Define the table in the template!")
         
-        self.uptaded_at = datetime.now()
+        self.updated_at = datetime.now()
         
-        query = (f'UPDATE {self.table_name} SET uptaded_at= ? WHERE id=?')
-        _execute(query, self.uptaded_at, self.id)
+        query = (f'UPDATE {self.table_name} SET updated_at= ? WHERE id=?')
+        _execute(query, (self.updated_at, self.id))
 
 
     def deleted(self):
