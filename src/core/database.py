@@ -3,7 +3,7 @@ import sqlite3
 import os
 import sqlite3
 
-DB_PATH = os.environ.get("DB_PATH", "/mnt/data/sqlite3.db")
+DB_PATH = os.environ.get("DB_PATH", "/tmp/sqlite3.db")
 
 def _execute(query, params=None):
     connection = sqlite3.connect(DB_PATH)
